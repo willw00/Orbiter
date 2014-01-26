@@ -3,7 +3,7 @@ class Orbiter
 
 	#Changing these breaks tests, which expect both to = 1
 	G_CONSTANT = 5
-	TIME_CONSTANT = 0.01
+	TIME_CONSTANT = 0.1
 
 	def self.calc_dist(body_a, body_b)
 		Math.sqrt( (body_a.x - body_b.x)**2 + (body_a.y - body_b.y)**2 )
@@ -43,9 +43,9 @@ class Orbiter
 
 	def self.track(file, bodies)
 		bodies.each do |body|
-			file.write("#{body.x}\t#{body.y}\t")
+			file.print("#{body.x}\t#{body.y}\t")
 		end
-		file.write("\n")
+		file.puts()
 	end
 
 end
