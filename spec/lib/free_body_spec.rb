@@ -1,9 +1,9 @@
 require 'spec_helper'
-require_relative '../../lib/helper'
+require_relative '../../lib/orbit_helper'
 
-describe Free_body do 
+describe Orbiter::Free_body do 
 	it "has default attributes" do 
-		free_body = Free_body.new
+		free_body = Orbiter::Free_body.new
 
 		expect(free_body.mass).to eq(10)
 		expect(free_body.x).to eq(0)
@@ -17,7 +17,7 @@ describe Free_body do
 	end
 
 	it "can accept other attributes" do 
-		free_body = Free_body.new(mass:15, x: 12, y: 11, vel_x: 23, vel_y: 31, acc_x: 100, acc_y: 1)
+		free_body = Orbiter::Free_body.new(mass:15, x: 12, y: 11, vel_x: 23, vel_y: 31, acc_x: 100, acc_y: 1)
 
 		expect(free_body.mass).to eq(15)
 		expect(free_body.x).to eq(12)
