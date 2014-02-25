@@ -1,51 +1,27 @@
-require 'pry'
-class Orbiter
+require_relative 'orbit_helper'
 
-	#Changing these breaks tests, which expect both to = 1
-	G_CONSTANT = 5
-	TIME_CONSTANT = 0.1
+module Orbiter	
 
-	def self.calc_dist(body_a, body_b)
-		Math.sqrt( (body_a.x - body_b.x)**2 + (body_a.y - body_b.y)**2 )
-	end
+	class Orbit_runner
 
-	def self.calc_grav_acc(target, other_bodies)
-		target.old_acc_x = target.acc_x
-		target.old_acc_y = target.acc_y
-		target.acc_x = 0.0
-		target.acc_y = 0.0
-		other_bodies.each do |other_body|
-			if (dist = calc_dist(target, other_body)) > 0
-				#binding.pry
-				acc = G_CONSTANT*other_body.mass / (dist ** 2)
-				target.acc_x += acc * Math.cos(calc_angle(target, other_body)) 
-				target.acc_y += acc * Math.sin(calc_angle(target, other_body))
+		def self.run(attrs = {})
+			@bodies = attrs.fetch(:bodies, [Orbiter::Free_body.new(mass: 10, x: 100, y: 100, vel_x: -5, vel_y: -1),
+																			Orbiter::Free_body.new(mass:1000)])
+			@output = attrs[:output] ? File.open(attrs[:output], 'w') : $stdout
+	
+			100.times do 
+				@bodies.each do |body|
+					Orbiter::Orbit_updater.calc_grav_acc(body, @bodies)
+					Orbiter::Orbit_updater.update_position(body)
+					Orbiter::Orbit_updater.calc_grav_acc(body, @bodies)
+					Orbiter::Orbit_updater.update_velocity(body)
+				end
+				Orbiter::Orbit_updater.track(@output, @bodies)
 			end
+	
+			@output.close
+		
+			puts "Thanks for running!"
 		end
 	end
-
-	def self.calc_angle(body_a, body_b)
-		y_diff = body_b.y - body_a.y
-		x_diff = body_b.x - body_a.x
-		Math.atan2(y_diff, x_diff)
-	end
-
-	def self.update_velocity(target)
-		#binding.pry
-		target.vel_x += TIME_CONSTANT * (target.old_acc_x + target.acc_x ) / 2
-		target.vel_y += TIME_CONSTANT * (target.old_acc_y + target.acc_y ) / 2
-	end
-
-	def self.update_position(target)
-		target.x += TIME_CONSTANT * ( target.vel_x + TIME_CONSTANT * target.acc_x / 2 )
-		target.y += TIME_CONSTANT * ( target.vel_y + TIME_CONSTANT * target.acc_y / 2 )
-	end
-
-	def self.track(file, bodies)
-		bodies.each do |body|
-			file.print("#{body.x}\t#{body.y}\t")
-		end
-		file.puts()
-	end
-
 end
