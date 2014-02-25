@@ -1,4 +1,4 @@
-require_relative 'orbit_helper'
+require_relative 'orbit_helper.rb'
 
 module Orbiter	
 
