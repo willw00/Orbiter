@@ -9,7 +9,7 @@ module Orbiter
 																			Orbiter::Free_body.new(mass:1000)])
 			@output = attrs[:output] ? File.open(attrs[:output], 'w') : $stdout
 	
-			100.times do 
+			10000.times do 
 				@bodies.each do |body|
 					Orbiter::Orbit_updater.calc_grav_acc(body, @bodies)
 					Orbiter::Orbit_updater.update_position(body)
