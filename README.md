@@ -34,7 +34,8 @@ plot 'move_tracker.txt' using 1:2 wi li, 'move_tracker.txt' using 3:4 wi li...
 for all bodies.  
 
 
-Things to address in later versions:
-*Make gravitational and time constants adjustable
-*Make number of time-steps adjustable
-*Work on creating a GUI
+Things to address in later versions:  
+-Make gravitational and time constants adjustable  
+-Make number of time-steps adjustable  
+-Work on creating a GUI  
+-Add 3D functionality?
