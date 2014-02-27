@@ -1,3 +1,5 @@
+[![Gem Version](https://badge.fury.io/rb/orbiter.png)](http://badge.fury.io/rb/orbiter)
+
 Orbiter
 =======
 This program calculates orbital effects for a system with an arbitrary number of bodies.  
